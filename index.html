@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        a {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body style="background-color: black; color: white; ">
+    <svg width="100%" height="500px">
+        <rect x="0" y="10" width="100%" height="95%" fill="white" id="target"/>
+      </svg>
+    <!--<div id='target' style="width: 100%;height: 500px; background-color: #a0a0a0;"></div>-->
+    <div>
+        <input type="text" value="60" id="bpmIndicator"><i> BPM</i>
+    </div>
+    <div>
+        <a style="font-size: 50px;" id="play">▶️</a>
+        <a style="font-size: 50px;" id="stop">⏹️</a>
+        <a style="font-size: 50px; display:inline-block;" id="audio-on">🔊</a>
+        <a style="font-size: 50px; display: none;" id="audio-off">🔇</a>
+    </div>
+</body>
+<script>
+    var play = false
+    var audio=true
+    var bpm = 60
+    var interval = 1000
+    var target = document.getElementById('target')
+    document.getElementById('bpmIndicator').value = 60;
+    document.getElementById('play').addEventListener("click", start)
+    document.getElementById('stop').addEventListener("click", stop)
+    document.getElementById('audio-on').addEventListener("click", audioOff)
+    document.getElementById('audio-off').addEventListener("click", audioOn)
+    document.getElementById('bpmIndicator').addEventListener("change", bpmChange)
+    function change() {
+        if (play) {
+
+            let color = 'red'
+            let rnd = Math.round(Math.random() * 100)
+            
+            audio?playAudio():void(0);
+            rnd < 50 ? color = 'red' : color = 'white'
+            target.setAttribute('fill', color)
+
+            console.log(rnd, color, bpm, interval)
+            setTimeout(() => { change() }, interval)
+        }
+    }
+    function start() {
+        if (play == true) return;
+        setTimeout(() => { change() }, interval)
+        play = true
+    }
+    function stop() {
+        play = false
+        target.style.setProperty('background-color', '#a0a0a0')
+    }
+    function bpmChange() {
+        stop()
+        bpm = document.getElementById('bpmIndicator').value;
+        interval = (60 / bpm) * 1000
+    }
+    function playAudio(){
+        let audio = new Audio('assets/click.mp3');
+        audio.play();
+    }
+    function audioOn(){
+        audio=true
+        document.getElementById('audio-on').style.setProperty('display','inline-block')
+        document.getElementById('audio-off').style.setProperty('display','none')
+    }
+    function audioOff(){
+        audio=false
+        document.getElementById('audio-on').style.setProperty('display','none')
+        document.getElementById('audio-off').style.setProperty('display','inline-block')
+    }
+</script>
+
+</html>
