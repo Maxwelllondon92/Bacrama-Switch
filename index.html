@@ -12,24 +12,31 @@
     </style>
 </head>
 
-<body style="background-color: black; color: white; ">
-    <svg width="100%" height="500px">
-        <rect x="0" y="10" width="100%" height="95%" fill="white" id="target"/>
-      </svg>
-    <!--<div id='target' style="width: 100%;height: 500px; background-color: #a0a0a0;"></div>-->
-    <div>
-        <input type="text" value="60" id="bpmIndicator"><i> BPM</i>
+<body style="background-color: black; color: white; font-family: Arial, Helvetica, sans-serif; ">
+    <div id='target'
+        style="width: 100%;height: 100%; background-image: url('assets/white.png');background-repeat: repeat; position: absolute;top:0;left:0;">
     </div>
-    <div>
-        <a style="font-size: 50px;" id="play">▶️</a>
-        <a style="font-size: 50px;" id="stop">⏹️</a>
-        <a style="font-size: 50px; display:inline-block;" id="audio-on">🔊</a>
-        <a style="font-size: 50px; display: none;" id="audio-off">🔇</a>
+    <div style="position: absolute; bottom:0; left:0; width: 100%;background-color: slategray;z-index: 1; display: flex;">
+        <div style="display: flex;flex-grow: 1;padding-left: 10px;">
+            <a style="font-size: 50px; display:inline-block;padding-right: 5px;" id="play">▶️</a>
+            <a style="font-size: 50px; display: none;padding-right: 5px;" id="stop">⏹️</a>
+            <a style="font-size: 50px; display:inline-block;" id="audio-on">🔊</a>
+            <a style="font-size: 50px; display: none;" id="audio-off">🔇</a>
+        </div>
+        <div style="display: flex;align-items: center;padding-right: 10px;">
+            <input type="text" value="60" id="bpmIndicator" style="font-size: 20pt; width:75px;text-align: center;">
+            <i style="font-size: 20pt;padding-left: 5px;">BPM</i>
+        </div>
+    </div>
+    <!-- pre render-->
+    <div style="visibility: hidden;">
+        <img src="assets/red.png">
+        <img src="assets/white.png" alt="">
     </div>
 </body>
 <script>
     var play = false
-    var audio=true
+    var audio = true
     var bpm = 60
     var interval = 1000
     var target = document.getElementById('target')
@@ -38,48 +45,53 @@
     document.getElementById('stop').addEventListener("click", stop)
     document.getElementById('audio-on').addEventListener("click", audioOff)
     document.getElementById('audio-off').addEventListener("click", audioOn)
-    document.getElementById('bpmIndicator').addEventListener("change", bpmChange)
+    document.getElementById('bpmIndicator').addEventListener("click", bpmChange)
     function change() {
         if (play) {
 
             let color = 'red'
             let rnd = Math.round(Math.random() * 100)
-            
-            audio?playAudio():void(0);
+
+            audio ? playAudio() : void (0);
             rnd < 50 ? color = 'red' : color = 'white'
-            target.setAttribute('fill', color)
+            target.style.setProperty('background-image', `url(assets/${color}.png)`)
 
             console.log(rnd, color, bpm, interval)
             setTimeout(() => { change() }, interval)
         }
     }
     function start() {
-        if (play == true) return;
-        setTimeout(() => { change() }, interval)
-        play = true
+        if (play == false) {
+            setTimeout(() => { change() }, interval)
+            document.getElementById('stop').style.setProperty('display', 'inline-block')
+            document.getElementById('play').style.setProperty('display', 'none')
+            play = true
+        }
     }
     function stop() {
         play = false
-        target.style.setProperty('background-color', '#a0a0a0')
+        target.style.setProperty('background-image', `url(assets/white.png)`)
+        document.getElementById('play').style.setProperty('display', 'inline-block')
+        document.getElementById('stop').style.setProperty('display', 'none')
     }
     function bpmChange() {
         stop()
         bpm = document.getElementById('bpmIndicator').value;
         interval = (60 / bpm) * 1000
     }
-    function playAudio(){
+    function playAudio() {
         let audio = new Audio('assets/click.mp3');
         audio.play();
     }
-    function audioOn(){
-        audio=true
-        document.getElementById('audio-on').style.setProperty('display','inline-block')
-        document.getElementById('audio-off').style.setProperty('display','none')
+    function audioOn() {
+        audio = true
+        document.getElementById('audio-on').style.setProperty('display', 'inline-block')
+        document.getElementById('audio-off').style.setProperty('display', 'none')
     }
-    function audioOff(){
-        audio=false
-        document.getElementById('audio-on').style.setProperty('display','none')
-        document.getElementById('audio-off').style.setProperty('display','inline-block')
+    function audioOff() {
+        audio = false
+        document.getElementById('audio-on').style.setProperty('display', 'none')
+        document.getElementById('audio-off').style.setProperty('display', 'inline-block')
     }
 </script>
 
