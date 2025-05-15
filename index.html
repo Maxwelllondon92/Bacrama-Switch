@@ -9,10 +9,17 @@
 </head>
 
 <body style=>
-    <div id='target'>
-    </div>
+    <main id='target'></main>
     <div id="settings">
         <a style="position: absolute;right: 0;top: 0;" id="settingsCloseBtn">❌</a>
+        <div>
+            <label for="sounds">Sound:</label>
+            <select name="sounds" id="sounds">
+                <option value="beep.mp3">Beep</option>
+                <option value="click.mp3">Click</option>
+                <option value="toot.mp3">Toot</option>
+            </select>
+        </div>
         <div class="flex flex-vcenter">
             <input type="checkbox" name="flash" id="flash"><i>Flash Mode</i>
         </div>
@@ -20,17 +27,17 @@
             <input type="checkbox" name="range" id="range"><i>Range Mode</i>
         </div>
         <div class="flex">
-                <i style="font-size: 20pt;padding: 5px;">BPM</i>
-                <input type="text" value="60" id="bpmIndicator">
-                <input type="text" value="60" id="bpmIndicatorMax">
+            <i style="font-size: 20pt;padding: 5px;">BPM</i>
+            <input type="text" value="60" id="bpmIndicator">
+            <input type="text" value="60" id="bpmIndicatorMax">
         </div>
     </div>
     <div id="footer">
-            <a id="play">▶️</a>
-            <a style="display: none;padding-right: 5px;" id="stop">⏹️</a>
-            <a id="audio-on">🔊</a>
-            <a style="display: none;" id="audio-off">🔇</a>
-            <a id="settingsBtn">⚙️</a>
+        <a id="play">▶️</a>
+        <a style="display: none;padding-right: 5px;" id="stop">⏹️</a>
+        <a id="audio-on">🔊</a>
+        <a style="display: none;" id="audio-off">🔇</a>
+        <a id="settingsBtn">⚙️</a>
     </div>
     <!-- pre render-->
     <div style="visibility: hidden;">

@@ -34,7 +34,7 @@ function change() {
         let colorRNG = Math.round(Math.random() * 100)
         let timeRNG = Math.random()
         let randomBPM = bpm + (timeRNG * bpmMax) - (timeRNG * bpm)
-        
+
         interval = (60 / randomBPM) * 1000
         audio ? playAudio() : void (0);
         colorRNG < 50 ? color = 'red' : color = 'white'
@@ -87,7 +87,8 @@ function changeRangeMode() {
 }
 function playAudio() {
     // Riproduce il suono metronomo
-    let audio = new Audio('assets/click.mp3');
+    let sound=document.getElementById('sounds').value
+    let audio = new Audio(`assets/${sound}`);
     audio.play();
 }
 function audioOn() {
